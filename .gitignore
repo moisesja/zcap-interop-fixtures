@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+dotnet/**/bin/
+dotnet/**/obj/
+
+artifacts/*
+!artifacts/.gitkeep
+!artifacts/history.jsonl
+

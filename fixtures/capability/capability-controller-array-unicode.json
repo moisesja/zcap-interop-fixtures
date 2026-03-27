@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "name": "capability-controller-array-unicode",
+  "kind": "capability",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "controller-array",
+    "unicode",
+    "escaping"
+  ],
+  "document": {
+    "@context": [
+      "https://w3id.org/zcap/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1"
+    ],
+    "id": "urn:uuid:cap-controller-array-unicode",
+    "type": "Authorization",
+    "controller": [
+      "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+      "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH"
+    ],
+    "parentCapability": "urn:zcap:root:https%3A%2F%2Fresource.example%2Ftherapy",
+    "invocationTarget": "https://resource.example/therapy/medication",
+    "caveat": [
+      {
+        "type": "AuditLabel",
+        "label": "Dose \\u00b5g / caf\\u00e9 / \\u60a3\\u8005"
+      }
+    ]
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-03-04T00:00:00Z",
+    "proofPurpose": "capabilityDelegation",
+    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+    "capabilityChain": [
+      "urn:zcap:root:https%3A%2F%2Fresource.example%2Ftherapy"
+    ]
+  },
+  "notes": "Controller array plus escaped unicode payload to expose string escaping differences."
+}

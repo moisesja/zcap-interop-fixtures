@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/interop-fixtures/schema/interop-fixture.schema.json",
+  "title": "Interop Fixture",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "name",
+    "kind",
+    "profile",
+    "tags",
+    "document",
+    "proof",
+    "notes"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "capability",
+        "invocation"
+      ]
+    },
+    "profile": {
+      "type": "string",
+      "const": "jcs-signing-payload-v1"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "document": {
+      "type": "object"
+    },
+    "proof": {
+      "type": "object"
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": false
+}

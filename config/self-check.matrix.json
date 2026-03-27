@@ -1,0 +1,17 @@
+{
+  "fixtures_dir": "../fixtures",
+  "output_root": "../artifacts",
+  "history_file": "../artifacts/history.jsonl",
+  "adapters": [
+    {
+      "id": "reference-a",
+      "runner": "python",
+      "adapter": "reference-jcs"
+    },
+    {
+      "id": "reference-b",
+      "runner": "python",
+      "adapter": "reference-jcs"
+    }
+  ]
+}

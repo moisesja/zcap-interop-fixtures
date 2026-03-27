@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "name": "invocation-embedded-capability-proof",
+  "kind": "invocation",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "capability-proof-object",
+    "nested-ordering",
+    "interop-core"
+  ],
+  "document": {
+    "id": "urn:uuid:inv-embedded-capability",
+    "capability": "urn:uuid:cap-child-embedded-parent",
+    "capabilityAction": "query_variant",
+    "invocationTarget": "https://resource.example/genomics/variant/17"
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-03-11T00:00:00Z",
+    "proofPurpose": "capabilityInvocation",
+    "verificationMethod": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH#z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+    "capability": {
+      "@context": [
+        "https://w3id.org/zcap/v1",
+        "https://w3id.org/security/suites/ed25519-2020/v1"
+      ],
+      "id": "urn:uuid:cap-child-embedded-parent",
+      "type": "Authorization",
+      "controller": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+      "parentCapability": "urn:uuid:cap-parent",
+      "invocationTarget": "https://resource.example/genomics/variant/17",
+      "allowedAction": [
+        "query_variant"
+      ]
+    },
+    "capabilityAction": "query_variant",
+    "invocationTarget": "https://resource.example/genomics/variant/17",
+    "capabilityChain": [
+      "urn:uuid:cap-parent"
+    ]
+  },
+  "notes": "Invocation proof carries an embedded delegated capability object instead of only a string capability id."
+}

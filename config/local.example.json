@@ -1,0 +1,47 @@
+{
+  "fixtures_dir": "../fixtures",
+  "output_root": "../artifacts",
+  "history_file": "../artifacts/history.jsonl",
+  "adapters": [
+    {
+      "id": "python-reference",
+      "runner": "python",
+      "adapter": "reference-jcs"
+    },
+    {
+      "id": "python-app",
+      "runner": "python",
+      "adapter": "identity-authorization-service",
+      "module_root": "../../identity-authorization-service/src",
+      "skip_if_missing": true
+    },
+    {
+      "id": "dotnet-zcap",
+      "runner": "dotnet",
+      "adapter": "zcap-dotnet-reflection",
+      "project": "../dotnet/InteropFixtures.Runner/InteropFixtures.Runner.csproj",
+      "assembly": "../../zcap-dotnet/src/ZcapLd.Core/bin/Debug/net10.0/ZcapLd.Core.dll",
+      "skip_if_missing": true
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "reference-vs-python-app",
+      "left": "python-reference",
+      "right": "python-app",
+      "label": "Reference JCS vs Python app"
+    },
+    {
+      "id": "reference-vs-dotnet",
+      "left": "python-reference",
+      "right": "dotnet-zcap",
+      "label": "Reference JCS vs .NET library"
+    },
+    {
+      "id": "python-app-vs-dotnet",
+      "left": "python-app",
+      "right": "dotnet-zcap",
+      "label": "Python app vs .NET library"
+    }
+  ]
+}

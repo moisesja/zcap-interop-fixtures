@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "name": "invocation-minimal",
+  "kind": "invocation",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "interop-core",
+    "minimal"
+  ],
+  "document": {
+    "id": "urn:uuid:inv-minimal",
+    "capability": "urn:uuid:cap-minimal",
+    "capabilityAction": "query_lab_results",
+    "invocationTarget": "https://resource.example/labs/123"
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-03-10T00:00:00Z",
+    "proofPurpose": "capabilityInvocation",
+    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+    "capability": "urn:uuid:cap-minimal",
+    "capabilityAction": "query_lab_results",
+    "invocationTarget": "https://resource.example/labs/123",
+    "capabilityChain": []
+  },
+  "notes": "Baseline invocation payload with all currently expected top-level fields present."
+}

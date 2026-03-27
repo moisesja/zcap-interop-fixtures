@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "name": "capability-actions-expiry",
+  "kind": "capability",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "interop-core",
+    "actions",
+    "expiry"
+  ],
+  "document": {
+    "@context": [
+      "https://w3id.org/zcap/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1"
+    ],
+    "id": "urn:uuid:cap-actions-expiry",
+    "type": "Authorization",
+    "controller": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+    "parentCapability": "urn:zcap:root:https%3A%2F%2Fresource.example%2Flabs",
+    "invocationTarget": "https://resource.example/labs/abc",
+    "allowedAction": [
+      "query_lab_results",
+      "query_histology"
+    ],
+    "expires": "2026-06-30T12:34:56Z"
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-03-01T12:00:00Z",
+    "proofPurpose": "capabilityDelegation",
+    "verificationMethod": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH#z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+    "capabilityChain": [
+      "urn:zcap:root:https%3A%2F%2Fresource.example%2Flabs"
+    ]
+  },
+  "notes": "Representative delegated capability with allowedAction and expires populated."
+}

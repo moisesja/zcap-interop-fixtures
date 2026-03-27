@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "name": "invocation-explicit-nulls",
+  "kind": "invocation",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "null-handling",
+    "edge"
+  ],
+  "document": {
+    "id": "urn:uuid:inv-explicit-nulls",
+    "capability": "urn:uuid:cap-explicit-nulls",
+    "capabilityAction": "query_nulls",
+    "invocationTarget": "https://resource.example/nulls/1"
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-03-13T00:00:00Z",
+    "proofPurpose": "capabilityInvocation",
+    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+    "capability": "urn:uuid:cap-explicit-nulls",
+    "capabilityAction": "query_nulls",
+    "invocationTarget": null,
+    "capabilityChain": null
+  },
+  "notes": "Explicit nulls in proof fields should either be omitted consistently or fail consistently across adapters."
+}

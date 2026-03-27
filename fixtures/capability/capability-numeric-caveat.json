@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "name": "capability-numeric-caveat",
+  "kind": "capability",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "numeric-normalization",
+    "caveat",
+    "spec-stress"
+  ],
+  "document": {
+    "@context": [
+      "https://w3id.org/zcap/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1"
+    ],
+    "id": "urn:uuid:cap-numeric-caveat",
+    "type": "Authorization",
+    "controller": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+    "parentCapability": "urn:zcap:root:https%3A%2F%2Fresource.example%2Fprivacy",
+    "invocationTarget": "https://resource.example/privacy/run",
+    "caveat": [
+      {
+        "type": "EpsilonBudget",
+        "maxEpsilon": 0.1,
+        "remaining": 1.0,
+        "smallestStep": 1e-06,
+        "thresholds": [
+          0,
+          0.1,
+          1.0,
+          1e-06
+        ]
+      }
+    ]
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-03-03T00:00:00Z",
+    "proofPurpose": "capabilityDelegation",
+    "verificationMethod": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH#z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+    "capabilityChain": [
+      "urn:zcap:root:https%3A%2F%2Fresource.example%2Fprivacy"
+    ]
+  },
+  "notes": "Numeric stress fixture intended to reveal canonicalizer differences on decimal and scientific notation."
+}

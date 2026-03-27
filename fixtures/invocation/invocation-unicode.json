@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "name": "invocation-unicode",
+  "kind": "invocation",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "unicode",
+    "escaping",
+    "spec-stress"
+  ],
+  "document": {
+    "id": "urn:uuid:inv-unicode",
+    "capability": "urn:uuid:cap-unicode",
+    "capabilityAction": "query_note",
+    "invocationTarget": "https://resource.example/notes/%E2%82%AC"
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-03-12T00:00:00Z",
+    "proofPurpose": "capabilityInvocation",
+    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+    "capability": "urn:uuid:cap-unicode",
+    "capabilityAction": "query_note",
+    "invocationTarget": "https://resource.example/notes/%E2%82%AC",
+    "auditLabel": "caf\\u00e9 / dose \\u00b5g / \\u60a3\\u8005",
+    "capabilityChain": []
+  },
+  "notes": "Escaped unicode fields help reveal string escaping differences between canonicalizers."
+}
