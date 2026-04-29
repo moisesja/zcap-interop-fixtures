@@ -3,6 +3,23 @@
 These are not failures of this fixture repository. They are existing
 interoperability risks or tooling gaps that the fixtures are intended to expose.
 
+## Cross-Library JCS Payload Shape
+
+- The dominant interop divergence in the current ecosystem is the JCS
+  signing-payload shape: `zcap-dotnet` wraps the capability/invocation in a
+  `{capability|invocation, proof}` envelope, while `zcap-py` (matching the W3C
+  Verifiable Credentials Data Integrity convention) canonicalizes the flat
+  document with a `proof` field at the top level. `moisesja/zcap-dotnet#34`
+  tracks the upstream fix.
+- This repo's `reference-jcs` adapter is now the W3C-flat shape — see issue
+  #1. The `wrapper-vs-flat-isolation` fixture pair guards against future
+  drift; until `zcap-dotnet#34` lands, the matrix will (correctly) report
+  DIVERGENCE for the .NET adapter.
+- Secondary divergence: `zcap-dotnet`'s `ProofSigningPayloadBuilder` uses a
+  hand-picked proof-field whitelist that silently drops fields (e.g. `nonce`,
+  `domain`) which `zcap-py` preserves verbatim under the `proof - proofValue`
+  rule. The `proof-field-whitelist` fixture pair isolates this case.
+
 ## zcap-dotnet
 
 - `ProofSigningPayloadBuilder` is internal, so an external neutral runner cannot

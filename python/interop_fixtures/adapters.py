@@ -27,42 +27,17 @@ def _canonicalize_reference(obj: dict[str, Any]) -> bytes:
 
 
 def _reference_capability_payload(document: dict[str, Any], proof: dict[str, Any]) -> bytes:
-    payload = _strip_nulls(
-        {
-            "capability": document,
-            "proof": {
-                "type": proof["type"],
-                "created": proof["created"],
-                "proofPurpose": proof["proofPurpose"],
-                "verificationMethod": proof["verificationMethod"],
-                "capabilityChain": proof.get("capabilityChain", []),
-            },
-        }
-    )
+    # W3C Verifiable Credentials Data Integrity flat shape: capability fields
+    # at the top level plus the proof object minus its proofValue. Matches
+    # zcap-py's verify_document_proof. See issue #1.
+    proof_minus_pv = {key: value for key, value in proof.items() if key != "proofValue"}
+    payload = _strip_nulls({**document, "proof": proof_minus_pv})
     return _canonicalize_reference(payload)
 
 
 def _reference_invocation_payload(document: dict[str, Any], proof: dict[str, Any]) -> bytes:
-    payload = _strip_nulls(
-        {
-            "invocation": {
-                "id": document["id"],
-                "capability": document["capability"],
-                "capabilityAction": document["capabilityAction"],
-                "invocationTarget": document["invocationTarget"],
-            },
-            "proof": {
-                "type": proof["type"],
-                "created": proof["created"],
-                "proofPurpose": proof["proofPurpose"],
-                "verificationMethod": proof["verificationMethod"],
-                "capability": proof.get("capability"),
-                "capabilityAction": proof.get("capabilityAction"),
-                "invocationTarget": proof.get("invocationTarget"),
-                "capabilityChain": proof.get("capabilityChain", []),
-            },
-        }
-    )
+    proof_minus_pv = {key: value for key, value in proof.items() if key != "proofValue"}
+    payload = _strip_nulls({**document, "proof": proof_minus_pv})
     return _canonicalize_reference(payload)
 
 

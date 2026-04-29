@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "capability-allowed-action-missing",
+  "kind": "capability",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "allowed-action",
+    "missing-field",
+    "model-defaults"
+  ],
+  "document": {
+    "@context": [
+      "https://w3id.org/zcap/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1"
+    ],
+    "id": "urn:uuid:cap-allowed-action-missing",
+    "type": "Authorization",
+    "controller": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+    "parentCapability": "urn:zcap:root:https%3A%2F%2Fresource.example%2Fallowed-actions",
+    "invocationTarget": "https://resource.example/allowed-actions/missing"
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-03-08T00:00:00Z",
+    "proofPurpose": "capabilityDelegation",
+    "verificationMethod": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH#z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+    "capabilityChain": [
+      "urn:zcap:root:https%3A%2F%2Fresource.example%2Fallowed-actions"
+    ]
+  },
+  "notes": "Paired with capability-allowed-action-empty to isolate missing versus explicit empty allowedAction behavior."
+}

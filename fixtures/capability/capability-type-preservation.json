@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "capability-type-preservation",
+  "kind": "capability",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "type-preservation",
+    "model-shape",
+    "interop-core"
+  ],
+  "document": {
+    "@context": [
+      "https://w3id.org/zcap/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1"
+    ],
+    "id": "urn:uuid:cap-type-preservation",
+    "type": "Authorization",
+    "controller": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+    "parentCapability": "urn:zcap:root:https%3A%2F%2Fresource.example%2Ftype-preservation",
+    "invocationTarget": "https://resource.example/type-preservation/1"
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-03-07T00:00:00Z",
+    "proofPurpose": "capabilityDelegation",
+    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+    "capabilityChain": [
+      "urn:zcap:root:https%3A%2F%2Fresource.example%2Ftype-preservation"
+    ]
+  },
+  "notes": "Minimal capability that isolates whether the type field is preserved in the canonical payload."
+}

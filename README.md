@@ -119,6 +119,7 @@ Update these fields:
 - `module_root`: path to the Python implementation root that exposes the payload builder module
 - `assembly`: path to the built `.NET` assembly under test
 - optionally `project`: keep or change the included runner project path if you move the runner
+- optionally `issue_repo`: GitHub repository that should receive issue-ready findings for that adapter
 
 The sample config assumes sibling checkouts. If your repos live elsewhere,
 replace those relative paths with absolute paths.
@@ -145,7 +146,9 @@ artifacts/runs/20260327T150207Z/
 Inside that directory you will find:
 
 - `REPORT.md`: readable summary for humans
+- `ISSUES.md`: issue-ready findings grouped by repository
 - `summary.json`: machine-readable overall result
+- `issue-candidates.json`: machine-readable issue candidates
 - `manifests/*.json`: raw per-adapter outputs
 - `comparisons/*.json`: structured pairwise findings
 
@@ -160,6 +163,7 @@ The matrix file is plain JSON. Each adapter entry has:
 - `runner`: `python` or `dotnet`
 - `adapter`: adapter name understood by that runner
 - runner-specific fields such as `module_root`, `project`, or `assembly`
+- optional `issue_repo`: GitHub repository name such as `moisesja/zcap-dotnet`
 - optional `skip_if_missing`: skip that adapter instead of failing when a path is absent
 
 Each comparison entry has:
@@ -174,6 +178,11 @@ The sample config in [config/local.example.json](config/local.example.json) alre
 - reference JCS vs Python application adapter
 - reference JCS vs .NET library adapter
 - Python application adapter vs .NET library adapter
+
+Issue-ready candidates are generated only when a comparison has a clear target
+repository. In practice that means the most actionable path today is a
+reference-vs-implementation comparison where the implementation adapter declares
+`issue_repo`.
 
 ## Common Commands
 
@@ -210,6 +219,21 @@ Run the matrix in CI and fail if any findings appear:
 ```bash
 python3 python/run_matrix.py --config config/local.json --fail-on-findings
 ```
+
+## Issue-Ready Findings
+
+If an adapter has `issue_repo` configured and a reference comparison finds
+drift, the run emits:
+
+- `ISSUES.md`: grouped draft issues with suggested titles, labels, and body text
+- `issue-candidates.json`: the same information in structured form
+
+The intended workflow is:
+
+1. Run the matrix.
+2. Review `REPORT.md` for the high-level picture.
+3. Review `ISSUES.md` for issue-ready findings.
+4. Tell me which candidates to publish, and I can open them in the configured repository.
 
 ## How To Interpret Results
 

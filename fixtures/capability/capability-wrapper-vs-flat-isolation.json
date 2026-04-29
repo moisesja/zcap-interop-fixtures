@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "name": "capability-wrapper-vs-flat-isolation",
+  "kind": "capability",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "interop-core",
+    "payload-shape",
+    "wrapper-vs-flat"
+  ],
+  "document": {
+    "@context": [
+      "https://w3id.org/zcap/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1"
+    ],
+    "id": "urn:uuid:cap-wrapper-vs-flat",
+    "type": "Authorization",
+    "controller": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+    "parentCapability": "urn:uuid:cap-wrapper-vs-flat-parent",
+    "invocationTarget": "https://resource.example/payload-shape/records/123",
+    "expires": "2027-01-01T00:00:00Z",
+    "allowedAction": [
+      "read",
+      "write"
+    ],
+    "caveat": [
+      {
+        "type": "ValidWhile",
+        "before": "2027-01-01T00:00:00Z"
+      }
+    ]
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-04-29T00:00:00Z",
+    "proofPurpose": "capabilityDelegation",
+    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+    "capabilityChain": [
+      "urn:zcap:root:https%3A%2F%2Fresource.example%2Fpayload-shape%2Frecords",
+      "urn:uuid:cap-wrapper-vs-flat-parent"
+    ]
+  },
+  "notes": "Isolation fixture for issue #1. Its only purpose is to expose the JCS signing-payload-shape divergence between adapters that wrap as {capability, proof} and adapters that canonicalize the W3C Verifiable Credentials Data Integrity flat shape. Populated capabilityChain, non-trivial caveat, and populated expires make the canonical bytes representative of real-world delegations."
+}

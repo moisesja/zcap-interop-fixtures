@@ -19,6 +19,7 @@
       "id": "dotnet-zcap",
       "runner": "dotnet",
       "adapter": "zcap-dotnet-reflection",
+      "issue_repo": "moisesja/zcap-dotnet",
       "project": "../dotnet/InteropFixtures.Runner/InteropFixtures.Runner.csproj",
       "assembly": "../../zcap-dotnet/src/ZcapLd.Core/bin/Debug/net10.0/ZcapLd.Core.dll",
       "skip_if_missing": true

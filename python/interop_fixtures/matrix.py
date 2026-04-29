@@ -11,6 +11,7 @@ from typing import Any
 from .adapters import load_python_adapter_from_config
 from .comparison import compare_manifests, load_manifest
 from .fixtures import iter_fixture_paths
+from .issues import build_issue_report, render_issue_report
 from .manifest import build_manifest, write_json
 
 
@@ -186,6 +187,7 @@ def run_adapter(
             "id": adapter_id,
             "runner": adapter_config["runner"],
             "adapter": adapter_config["adapter"],
+            "issue_repo": adapter_config.get("issue_repo"),
             "status": "skipped",
             "reason": reason,
         }
@@ -194,6 +196,7 @@ def run_adapter(
             "id": adapter_id,
             "runner": adapter_config["runner"],
             "adapter": adapter_config["adapter"],
+            "issue_repo": adapter_config.get("issue_repo"),
             "status": "error",
             "reason": reason,
         }
@@ -211,6 +214,7 @@ def run_adapter(
             "id": adapter_id,
             "runner": manifest["runner"],
             "adapter": manifest["adapter"],
+            "issue_repo": adapter_config.get("issue_repo"),
             "status": "ok",
             "manifest_path": manifest_path.relative_to(output_dir).as_posix(),
             "fixture_count": manifest["fixture_count"],
@@ -220,6 +224,7 @@ def run_adapter(
             "id": adapter_id,
             "runner": adapter_config["runner"],
             "adapter": adapter_config["adapter"],
+            "issue_repo": adapter_config.get("issue_repo"),
             "status": "error",
             "reason": str(exc),
         }
@@ -234,6 +239,7 @@ def render_report(summary: dict[str, Any]) -> str:
         f"- Adapters available: `{summary['scorecard']['available_adapters']}`",
         f"- Successful adapters: `{summary['scorecard']['successful_adapters']}`",
         f"- Comparisons with findings: `{summary['scorecard']['comparisons_with_findings']}`",
+        f"- Issue-ready candidates: `{summary['scorecard']['issue_candidate_count']}`",
         "",
         "## Adapter Status",
         "",
@@ -283,6 +289,16 @@ def render_report(summary: dict[str, Any]) -> str:
             for finding in comparison["top_findings"]:
                 lines.append(f"- `{finding['name']}`: {finding['message']}")
             lines.append("")
+
+    lines.extend(
+        [
+            "",
+            "## Issue Follow-Up",
+            "",
+            f"- Issue report: `{summary.get('issue_report_path', 'ISSUES.md')}`",
+            f"- Issue candidate JSON: `{summary.get('issue_report_json_path', 'issue-candidates.json')}`",
+        ]
+    )
 
     return "\n".join(lines).rstrip() + "\n"
 
@@ -390,8 +406,20 @@ def main() -> int:
             "comparisons_run": sum(1 for comparison in comparisons if comparison["status"] != "skipped"),
             "comparisons_with_findings": sum(1 for comparison in comparisons if comparison["status"] == "mismatch"),
             "fully_matching_comparisons": sum(1 for comparison in comparisons if comparison["status"] == "match"),
+            "issue_candidate_count": 0,
         },
     }
+
+    issue_report = build_issue_report(summary, output_dir)
+    issue_report_json_path = output_dir / "issue-candidates.json"
+    write_json(issue_report_json_path, issue_report)
+
+    issue_report_path = output_dir / "ISSUES.md"
+    issue_report_path.write_text(render_issue_report(issue_report), encoding="utf-8")
+
+    summary["issue_report_path"] = issue_report_path.relative_to(output_dir).as_posix()
+    summary["issue_report_json_path"] = issue_report_json_path.relative_to(output_dir).as_posix()
+    summary["scorecard"]["issue_candidate_count"] = issue_report["candidate_count"]
 
     summary_path = output_dir / "summary.json"
     write_json(summary_path, summary)

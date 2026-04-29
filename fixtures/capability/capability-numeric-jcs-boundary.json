@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "name": "capability-numeric-jcs-boundary",
+  "kind": "capability",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "numeric-normalization",
+    "jcs-boundary",
+    "spec-stress"
+  ],
+  "document": {
+    "@context": [
+      "https://w3id.org/zcap/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1"
+    ],
+    "id": "urn:uuid:cap-numeric-jcs-boundary",
+    "type": "Authorization",
+    "controller": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+    "parentCapability": "urn:zcap:root:https%3A%2F%2Fresource.example%2Fnumeric-boundary",
+    "invocationTarget": "https://resource.example/numeric-boundary/run",
+    "caveat": [
+      {
+        "type": "NumericBoundary",
+        "negativeZero": -0.0,
+        "tinyExponent": 1e-27,
+        "smallExponent": 1e-06,
+        "largeExponent": 1e+30,
+        "roundedFraction": 333333333.3333333,
+        "wholeNumberAsFloat": 2.0,
+        "thresholds": [
+          -0.0,
+          0,
+          1e-06,
+          1e-27,
+          1e+30,
+          9007199254740991
+        ]
+      }
+    ]
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-03-15T00:00:00Z",
+    "proofPurpose": "capabilityDelegation",
+    "verificationMethod": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH#z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+    "capabilityChain": [
+      "urn:zcap:root:https%3A%2F%2Fresource.example%2Fnumeric-boundary"
+    ]
+  },
+  "notes": "Numeric boundary fixture intended to expose JCS differences such as negative zero and exponent normalization."
+}

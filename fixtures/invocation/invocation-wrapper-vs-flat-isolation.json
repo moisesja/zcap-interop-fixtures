@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "invocation-wrapper-vs-flat-isolation",
+  "kind": "invocation",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "interop-core",
+    "payload-shape",
+    "wrapper-vs-flat"
+  ],
+  "document": {
+    "id": "urn:uuid:inv-wrapper-vs-flat",
+    "capability": "urn:uuid:cap-wrapper-vs-flat",
+    "capabilityAction": "read",
+    "invocationTarget": "https://resource.example/payload-shape/records/123"
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-04-29T00:00:00Z",
+    "proofPurpose": "capabilityInvocation",
+    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+    "capability": "urn:uuid:cap-wrapper-vs-flat",
+    "capabilityAction": "read",
+    "invocationTarget": "https://resource.example/payload-shape/records/123",
+    "capabilityChain": [
+      "urn:zcap:root:https%3A%2F%2Fresource.example%2Fpayload-shape%2Frecords",
+      "urn:uuid:cap-wrapper-vs-flat-parent",
+      "urn:uuid:cap-wrapper-vs-flat"
+    ]
+  },
+  "notes": "Isolation fixture for issue #1. Pairs with capability-wrapper-vs-flat-isolation. Adapters that canonicalize as {invocation, proof} produce different JCS bytes than adapters that canonicalize the W3C Verifiable Credentials Data Integrity flat shape, surfacing the dominant cross-language divergence as a single-fixture failure."
+}

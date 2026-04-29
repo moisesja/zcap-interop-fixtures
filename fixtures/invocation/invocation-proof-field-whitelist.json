@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "name": "invocation-proof-field-whitelist",
+  "kind": "invocation",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "interop-core",
+    "proof-field-whitelist"
+  ],
+  "document": {
+    "id": "urn:uuid:inv-proof-field-whitelist",
+    "capability": "urn:uuid:cap-proof-field-whitelist",
+    "capabilityAction": "read",
+    "invocationTarget": "https://resource.example/proof-fields/records/123"
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-04-29T00:00:00Z",
+    "proofPurpose": "capabilityInvocation",
+    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+    "capability": "urn:uuid:cap-proof-field-whitelist",
+    "capabilityAction": "read",
+    "invocationTarget": "https://resource.example/proof-fields/records/123",
+    "nonce": "abc123",
+    "domain": "https://resource.example/proof-fields",
+    "capabilityChain": [
+      "urn:zcap:root:https%3A%2F%2Fresource.example%2Fproof-fields%2Frecords",
+      "urn:uuid:cap-proof-field-whitelist-parent",
+      "urn:uuid:cap-proof-field-whitelist"
+    ]
+  },
+  "notes": "Isolation fixture for the secondary divergence flagged in issue #1. Pairs with capability-proof-field-whitelist. Adapters that hand-pick proof fields drop nonce and domain; adapters that follow the W3C 'proof minus proofValue' rule preserve them. The disagreement appears as a one-fixture canonical-bytes mismatch."
+}

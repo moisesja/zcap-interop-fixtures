@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "name": "invocation-empty-capability-action-edge",
+  "kind": "invocation",
+  "profile": "jcs-signing-payload-v1",
+  "tags": [
+    "capability-action-empty-string",
+    "edge",
+    "model-defaults"
+  ],
+  "document": {
+    "id": "urn:uuid:inv-empty-action",
+    "capability": "urn:uuid:cap-empty-action",
+    "capabilityAction": "",
+    "invocationTarget": "https://resource.example/empty-action"
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-03-16T00:00:00Z",
+    "proofPurpose": "capabilityInvocation",
+    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+    "capability": "urn:uuid:cap-empty-action",
+    "capabilityAction": "",
+    "invocationTarget": "https://resource.example/empty-action",
+    "capabilityChain": []
+  },
+  "notes": "Paired with invocation-missing-capability-action-edge to distinguish explicit empty string from a missing capabilityAction field."
+}
