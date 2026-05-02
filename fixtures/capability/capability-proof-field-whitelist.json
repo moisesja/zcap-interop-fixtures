@@ -23,8 +23,8 @@
     ],
     "caveat": [
       {
-        "type": "ValidWhile",
-        "before": "2027-01-01T00:00:00Z"
+        "type": "UsageCount",
+        "maxUses": 5
       }
     ]
   },

@@ -150,6 +150,7 @@ internal sealed class ZcapDotnetReflectionRunner
     private readonly Type _proofType;
     private readonly MethodInfo _canonicalizeCapabilityPayload;
     private readonly MethodInfo _canonicalizeInvocationPayload;
+    private readonly JsonSerializerOptions _deserializerOptions;
 
     public ZcapDotnetReflectionRunner(string assemblyPath, string fixturesDir)
     {
@@ -179,6 +180,23 @@ internal sealed class ZcapDotnetReflectionRunner
         _canonicalizeInvocationPayload = RequireMethod(
             payloadBuilderType,
             "CanonicalizeInvocationPayload");
+
+        _deserializerOptions = ResolveDeserializerOptions(_assembly);
+    }
+
+    // Use the upstream's blessed JsonSerializerOptions when present
+    // (ZcapLd.Core.Cryptography.ZcapJsonOptions.Default, introduced post-#39).
+    // It carries CaveatJsonConverter so polymorphic Caveat[] deserialization works.
+    // Fall back to ad-hoc options for older builds that don't expose the type.
+    private static JsonSerializerOptions ResolveDeserializerOptions(Assembly assembly)
+    {
+        var optionsType = assembly.GetType("ZcapLd.Core.Cryptography.ZcapJsonOptions");
+        var defaultProp = optionsType?.GetProperty("Default", BindingFlags.Public | BindingFlags.Static);
+        if (defaultProp?.GetValue(null) is JsonSerializerOptions upstream)
+        {
+            return upstream;
+        }
+        return new JsonSerializerOptions { PropertyNameCaseInsensitive = false };
     }
 
     public FixtureManifestEntry ProcessFixture(string fixturePath)
@@ -255,10 +273,7 @@ internal sealed class ZcapDotnetReflectionRunner
 
     private object Deserialize(string json, Type targetType)
     {
-        var result = JsonSerializer.Deserialize(json, targetType, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = false
-        });
+        var result = JsonSerializer.Deserialize(json, targetType, _deserializerOptions);
         return result ?? throw new InvalidOperationException(
             $"Deserialization to {targetType.FullName} returned null.");
     }
