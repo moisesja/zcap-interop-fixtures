@@ -26,17 +26,14 @@ interoperability risks or tooling gaps that the fixtures are intended to expose.
 - `ProofSigningPayloadBuilder` is internal, so an external neutral runner cannot
   call it through a stable public API. The current .NET runner therefore uses
   reflection.
-- `JsonCanonicalizer` is described as simplified rather than a formal RFC 8785
-  implementation, so strict JCS parity is not guaranteed for all JSON values.
-- The current `Capability` model path drops the fixture `type` field from the
-  canonical payload, which changes the bytes relative to Python/reference
-  output.
+- `JsonCanonicalizer` is described in source as a simplified implementation
+  rather than a formally audited RFC 8785 one. In practice it produces correct
+  bytes for every fixture currently in the matched set on
+  `zcap-dotnet ≥ 2.1.0` (the encoder fix in `zcap-dotnet#36/#38` closed the
+  last known divergence), but no formal RFC 8785 conformance audit exists, so
+  novel value shapes outside the current fixture corpus may still drift.
 - `Capability.controller` currently behaves as a single string in the model
   path; controller arrays do not deserialize from neutral fixture JSON.
-- `Capability.AllowedAction` defaults to `Array.Empty<string>()`, which can
-  erase the distinction between a missing field and an explicitly empty array.
-- `Capability.Caveat` also defaults to `Array.Empty<Caveat>()`, with the same
-  field-presence risk.
 - Polymorphic `Caveat` deserialization is registry-based
   (`CaveatTypeRegistry.Default`, seeded with `Expiration`, `UsageCount`,
   `ValidWhileTrue`) rather than attribute-driven. Fixtures using a caveat
@@ -51,8 +48,13 @@ interoperability risks or tooling gaps that the fixtures are intended to expose.
 
 ## Python
 
-- `zcap-py` does not currently expose a public capability/invocation payload
-  canonicalization API analogous to the application payload builders.
+- `zcap-py` exposes the JCS canonicalization primitive publicly
+  (`zcap_py.jcs.canonicalize.canonicalize(obj) -> bytes`), but does not expose
+  a public *payload builder* analogous to .NET's `ProofSigningPayloadBuilder`.
+  The W3C-flat assembly (proof minus `proofValue`, merged into the document)
+  is inlined inside `verify_document_proof` in
+  `src/zcap_py/proof/ed25519_2020.py`. Third parties wanting to canonicalize
+  the same bytes have to copy that assembly logic by hand.
 - The current Python application adapter is therefore tied to
   `identity_authorization_service.crypto`, which is app-specific rather than a
   neutral library contract.
